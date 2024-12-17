@@ -1,0 +1,32 @@
+{
+  "name": "cppinsight",
+  "displayName": "CppInsight",
+  "description": "C++ Code Metrics and Complexity Analyzer",
+  "version": "1.0.0",
+  "publisher": "blessed",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "activationEvents": [
+    "onLanguage:cpp"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "cppinsight.analyze",
+        "title": "Analyze C++ Code with CppInsight"
+      }
+    ]
+  },
+  "scripts": {
+    "watch": "tsc --watch",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^20.17.10",
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.7.2"
+  }
+}
