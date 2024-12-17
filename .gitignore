@@ -1,6 +1,55 @@
-dist
-node_modules
-.vscode-test/
+# Node.js dependencies
+node_modules/
+pnpm-lock.yaml
+package-lock.json
+
+# Output directories
+out/
+dist/
+build/
 *.vsix
-/.vscode
+
+# TypeScript build artifacts
+*.js
+*.js.map
+*.d.ts
+*.d.ts.map
+tsconfig.tsbuildinfo
+
+# Logs and debug files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.vscode-test
+
+# Editor directories and settings
+.vscode/
+.vscodeignore
+.idea/
+*.iml
+*.sw?
 .DS_Store
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Mac system files
+Thumbs.db
+.DS_Store
+
+# Linting/Testing tools
+eslint.cache
+*.eslintcache
+
+# Environment files
+.env
+.env.test
+.env.local
+.env.production
+
+# Miscellaneous
+*.log
+*.bak
