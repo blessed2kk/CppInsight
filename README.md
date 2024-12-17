@@ -111,3 +111,5 @@
 -  [clang-format Documentation](https://clang.llvm.org/docs/ClangFormatStyleOptions.html): Форматирование кода с использованием clang-format.
 
 **Enjoy Coding with CppInsight! 🚀**
+--------------------------------------
+by Щетников Тимофей М3104

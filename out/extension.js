@@ -30,7 +30,9 @@ const highlighter_1 = require("./highlighter");
 function activate(context) {
     vscode.window.showInformationMessage('CppInsight Plugin Activated');
     vscode.workspace.onDidSaveTextDocument((document) => {
-        if (document.languageId === 'cpp') {
+        const config = vscode.workspace.getConfiguration('cppinsight');
+        const enableAnalysisOnSave = config.get('enableAnalysisOnSave', true);
+        if (document.languageId === 'cpp' && enableAnalysisOnSave) {
             analyzer_1.outputChannel.clear();
             vscode.window.showInformationMessage(`Analyzing ${document.fileName}...`);
             runAnalysis(document);

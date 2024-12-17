@@ -26,6 +26,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.highlightIssues = void 0;
 const vscode = __importStar(require("vscode"));
 function highlightIssues(editor, metrics) {
+    const config = vscode.workspace.getConfiguration('cppinsight');
+    const highlightIssues = config.get('highlightIssues', true);
+    if (!highlightIssues)
+        return;
     const decorationType = vscode.window.createTextEditorDecorationType({
         backgroundColor: 'rgba(255, 0, 0, 0.3)',
     });

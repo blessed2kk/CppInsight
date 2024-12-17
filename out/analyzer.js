@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.analyzeCode = exports.outputChannel = void 0;
+exports.promptToFixStyle = exports.analyzeCode = exports.outputChannel = void 0;
 const vscode = __importStar(require("vscode"));
 const child_process_1 = require("child_process");
 exports.outputChannel = vscode.window.createOutputChannel('CppInsight Analysis');
@@ -192,19 +192,26 @@ function checkNamingConventions(filePath) {
     });
 }
 function promptToFixStyle(filePath) {
-    vscode.window
-        .showWarningMessage(`⚠️ Code style issues detected. Fix automatically?`, 'Yes, Fix', 'No')
-        .then((choice) => {
-        if (choice === 'Yes, Fix') {
-            (0, child_process_1.exec)(`clang-format --style="{UseTab: ForIndentation, IndentWidth: 4, TabWidth: 4, ContinuationIndentWidth: 8}" -i "${filePath}"`, (err, _, stderr) => {
-                if (err)
-                    logOutput(`❌ Error fixing style: ${stderr || err.message}`);
-                else
-                    logOutput(`✅ Code style issues fixed successfully.`);
-            });
-        }
-    });
+    const config = vscode.workspace.getConfiguration('cppinsight');
+    const styleFixPrompt = config.get('styleFixPrompt', true);
+    if (styleFixPrompt) {
+        vscode.window
+            .showWarningMessage(`⚠️ Code style issues detected. Fix automatically?`, 'Yes, Fix', 'No')
+            .then((choice) => {
+            if (choice === 'Yes, Fix') {
+                (0, child_process_1.exec)(`clang-format -i "${filePath}"`, (err, _, stderr) => {
+                    if (err) {
+                        vscode.window.showErrorMessage(`❌ Error fixing style: ${stderr}`);
+                    }
+                    else {
+                        vscode.window.showInformationMessage(`✅ Code style issues fixed successfully.`);
+                    }
+                });
+            }
+        });
+    }
 }
+exports.promptToFixStyle = promptToFixStyle;
 function logOutput(message) {
     exports.outputChannel.appendLine(message);
     exports.outputChannel.show(true);

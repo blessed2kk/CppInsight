@@ -2,6 +2,11 @@ import * as vscode from 'vscode';
 import { CodeMetrics } from './analyzer';
 
 export function highlightIssues(editor: vscode.TextEditor, metrics: CodeMetrics) {
+    const config = vscode.workspace.getConfiguration('cppinsight');
+    const highlightIssues = config.get<boolean>('highlightIssues', true);
+    
+    if (!highlightIssues) return;
+
     const decorationType = vscode.window.createTextEditorDecorationType({
         backgroundColor: 'rgba(255, 0, 0, 0.3)',
     });

@@ -5,7 +5,10 @@ import { highlightIssues } from './highlighter';
 export function activate(context: vscode.ExtensionContext) {
     vscode.window.showInformationMessage('CppInsight Plugin Activated');
     vscode.workspace.onDidSaveTextDocument((document) => {
-        if (document.languageId === 'cpp') {
+        const config = vscode.workspace.getConfiguration('cppinsight');
+        const enableAnalysisOnSave = config.get<boolean>('enableAnalysisOnSave', true);
+
+        if (document.languageId === 'cpp' && enableAnalysisOnSave) {
             outputChannel.clear();
             vscode.window.showInformationMessage(`Analyzing ${document.fileName}...`);
             runAnalysis(document);

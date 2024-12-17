@@ -212,17 +212,29 @@ function checkNamingConventions(filePath: string): void {
     });
 }
 
-function promptToFixStyle(filePath: string): void {
-    vscode.window
-        .showWarningMessage(`⚠️ Code style issues detected. Fix automatically?`, 'Yes, Fix', 'No')
-        .then((choice) => {
-            if (choice === 'Yes, Fix') {
-                exec(`clang-format --style="{UseTab: ForIndentation, IndentWidth: 4, TabWidth: 4, ContinuationIndentWidth: 8}" -i "${filePath}"`, (err, _, stderr) => {
-                    if (err) logOutput(`❌ Error fixing style: ${stderr || err.message}`);
-                    else logOutput(`✅ Code style issues fixed successfully.`);
-                });
-            }
-        });
+export function promptToFixStyle(filePath: string): void {
+    const config = vscode.workspace.getConfiguration('cppinsight');
+    const styleFixPrompt = config.get<boolean>('styleFixPrompt', true);
+
+    if (styleFixPrompt) {
+        vscode.window
+            .showWarningMessage(
+                `⚠️ Code style issues detected. Fix automatically?`,
+                'Yes, Fix',
+                'No'
+            )
+            .then((choice) => {
+                if (choice === 'Yes, Fix') {
+                    exec(`clang-format -i "${filePath}"`, (err, _, stderr) => {
+                        if (err) {
+                            vscode.window.showErrorMessage(`❌ Error fixing style: ${stderr}`);
+                        } else {
+                            vscode.window.showInformationMessage(`✅ Code style issues fixed successfully.`);
+                        }
+                    });
+                }
+            });
+    }
 }
 
 function logOutput(message: string): void {

@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/blessed2kk/CppInsight.git"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "blessed",
   "engines": {
     "vscode": "^1.60.0"
@@ -27,7 +27,17 @@
         "cppinsight.enableAnalysisOnSave": {
           "type": "boolean",
           "default": true,
-          "description": "Enable automatic analysis on file save."
+          "description": "Автоматически запускать анализ при сохранении файла."
+        },
+        "cppinsight.styleFixPrompt": {
+          "type": "boolean",
+          "default": true,
+          "description": "Показывать диалоговое окно для исправления стиля автоматически."
+        },
+        "cppinsight.highlightIssues": {
+          "type": "boolean",
+          "default": true,
+          "description": "Включить подсветку функций с проблемной метрикой."
         }
       }
     }
