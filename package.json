@@ -1,32 +1,48 @@
 {
   "name": "cppinsight",
   "displayName": "CppInsight",
-  "description": "C++ Code Metrics and Complexity Analyzer",
+  "description": "A powerful C++ code analysis tool",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blessed2kk/CppInsight.git"
+  },
   "version": "1.0.0",
   "publisher": "blessed",
   "engines": {
     "vscode": "^1.60.0"
   },
+  "categories": [
+    "Programming Languages",
+    "Linters"
+  ],
   "activationEvents": [
     "onLanguage:cpp"
   ],
   "main": "./out/extension.js",
   "contributes": {
-    "commands": [
-      {
-        "command": "cppinsight.analyze",
-        "title": "Analyze C++ Code with CppInsight"
+    "configuration": {
+      "type": "object",
+      "title": "CppInsight Settings",
+      "properties": {
+        "cppinsight.enableAnalysisOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable automatic analysis on file save."
+        }
       }
-    ]
+    }
   },
   "scripts": {
-    "watch": "tsc --watch",
-    "build": "tsc"
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile",
+    "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/mocha": "^10.0.10",
-    "@types/node": "^20.17.10",
-    "@types/vscode": "^1.80.0",
-    "typescript": "^5.7.2"
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.50.0",
+    "typescript": "^4.0.3",
+    "vsce": "^1.97.0"
   }
 }
